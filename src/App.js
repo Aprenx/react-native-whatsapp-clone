@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import FormLogin from './componentes/FormLogin.js';
-import FormCadastro from './componentes/FormCadastro.js';
+import React, { Component } from 'react';
+import Routes from './Routes';
 
-export default props => (
-  <FormCadastro />
-);
+export default class App extends Component {
+  render(){
+    return <Routes />;
+  }
+}

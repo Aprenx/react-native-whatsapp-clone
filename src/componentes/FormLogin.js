@@ -19,7 +19,9 @@ export default props => (
                 style={estilo.inputs} 
                 placeholder='Senha' 
             />
-            <Text style={estilo.textCadastrar}>Ainda não tem cadastro? Cadastre-se</Text>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Cadastro')} >
+                <Text style={estilo.textCadastrar}>Ainda não tem cadastro? Cadastre-se</Text>
+            </TouchableOpacity>
         </View>
         <View style={estilo.containerBotao}>
             <TouchableOpacity style={estilo.botao} onPress={() => false}> 
