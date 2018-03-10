@@ -2,6 +2,8 @@ import React from 'React';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 
+import { modificaEmail, modificaSenha } from '../actions/AutenticacaoActions';
+
 const formLogin = props => {
     console.log(props);
     return(
@@ -11,6 +13,7 @@ const formLogin = props => {
             </View>
             <View style={estilo.containerInputs}>
                 <TextInput 
+                    onChangeText={texto => props.modificaEmail(texto)}
                     value={props.email}
                     underlineColorAndroid="#08563c"
                     selectionColor="#08563c" 
@@ -18,6 +21,7 @@ const formLogin = props => {
                     placeholder='E-mail' 
                 />
                 <TextInput 
+                    onChangeText={texto => props.modificaSenha(texto)}
                     value={props.senha}
                     underlineColorAndroid="#08563c" 
                     selectionColor="#08563c" 
@@ -85,5 +89,5 @@ const estilo = {
     }
 }
 
-//o connect junta o mapeamento dos estados e passa como props para o formLogin
-export default connect(mapStateToProps, null)(formLogin);
+//o connect junta o mapeamento dos estados e passa como props para o formLogin em tempo de execução
+export default connect(mapStateToProps, { modificaEmail, modificaSenha })(formLogin);
