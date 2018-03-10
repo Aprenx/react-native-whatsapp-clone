@@ -1,34 +1,48 @@
 import React from 'React';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { connect } from 'react-redux';
 
-export default props => (
-    <View style={estilo.container}>
-        <View style={estilo.containerTitulo}>
-            <Text style={estilo.textoTitulo}> WhatsApp Clone </Text>
+const formLogin = props => {
+    console.log(props);
+    return(
+        <View style={estilo.container}>
+            <View style={estilo.containerTitulo}>
+                <Text style={estilo.textoTitulo}> WhatsApp Clone </Text>
+            </View>
+            <View style={estilo.containerInputs}>
+                <TextInput 
+                    value={props.email}
+                    underlineColorAndroid="#08563c"
+                    selectionColor="#08563c" 
+                    style={estilo.inputs} 
+                    placeholder='E-mail' 
+                />
+                <TextInput 
+                    value={props.senha}
+                    underlineColorAndroid="#08563c" 
+                    selectionColor="#08563c" 
+                    style={estilo.inputs} 
+                    placeholder='Senha' 
+                />
+                <TouchableOpacity onPress={() => props.navigation.navigate('Cadastro')} >
+                    <Text style={estilo.textCadastrar}>Ainda não tem cadastro? Cadastre-se</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={estilo.containerBotao}>
+                <TouchableOpacity style={estilo.botao} onPress={() => false}> 
+                    <Text style={estilo.textoBotao}>ACESSAR</Text>
+                </TouchableOpacity >
+            </View>    
         </View>
-        <View style={estilo.containerInputs}>
-            <TextInput 
-                underlineColorAndroid="#08563c"
-                selectionColor="#08563c" 
-                style={estilo.inputs} 
-                placeholder='E-mail' 
-            />
-            <TextInput 
-                underlineColorAndroid="#08563c" 
-                selectionColor="#08563c" 
-                style={estilo.inputs} 
-                placeholder='Senha' 
-            />
-            <TouchableOpacity onPress={() => props.navigation.navigate('Cadastro')} >
-                <Text style={estilo.textCadastrar}>Ainda não tem cadastro? Cadastre-se</Text>
-            </TouchableOpacity>
-        </View>
-        <View style={estilo.containerBotao}>
-            <TouchableOpacity style={estilo.botao} onPress={() => false}> 
-                <Text style={estilo.textoBotao}>ACESSAR</Text>
-            </TouchableOpacity >
-        </View>    
-    </View>
+    )
+};
+
+//faz o mapeamento dos estados do redux que desejo pegar do reducer para passar para props
+const mapStateToProps = state => (
+    {
+        email: state.AutenticacaoReducer.email,
+        senha: state.AutenticacaoReducer.senha
+    }
 );
 
 const estilo = {
@@ -70,3 +84,6 @@ const estilo = {
         height: 50,
     }
 }
+
+//o connect junta o mapeamento dos estados e passa como props para o formLogin
+export default connect(mapStateToProps, null)(formLogin);
