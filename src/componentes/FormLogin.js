@@ -1,7 +1,9 @@
 import React from 'React';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
+import CampoTexto from './utils/campoTexto';
+import { BtnDefault, BtnLink } from './utils/botoes';
 import { modificaEmail, modificaSenha } from '../actions/AutenticacaoActions';
 
 const formLogin = props => {
@@ -12,30 +14,24 @@ const formLogin = props => {
                 <Text style={estilo.textoTitulo}> WhatsApp Clone </Text>
             </View>
             <View style={estilo.containerInputs}>
-                <TextInput 
-                    onChangeText={texto => props.modificaEmail(texto)}
-                    value={props.email}
-                    underlineColorAndroid="#08563c"
-                    selectionColor="#08563c" 
-                    style={estilo.inputs} 
-                    placeholder='E-mail' 
+                <CampoTexto 
+                    modifica={props.modificaEmail}
+                    valor={props.email} 
+                    pHolder='E-mail' 
                 />
-                <TextInput 
-                    onChangeText={texto => props.modificaSenha(texto)}
-                    value={props.senha}
-                    underlineColorAndroid="#08563c" 
-                    selectionColor="#08563c" 
-                    style={estilo.inputs} 
-                    placeholder='Senha' 
+                <CampoTexto 
+                    modifica={props.modificaSenha}
+                    secure={true}
+                    valor={props.senha}
+                    pHolder='Senha' 
                 />
-                <TouchableOpacity onPress={() => props.navigation.navigate('Cadastro')} >
-                    <Text style={estilo.textCadastrar}>Ainda não tem cadastro? Cadastre-se</Text>
-                </TouchableOpacity>
+                <BtnLink 
+                    action={() => props.navigation.navigate('Cadastro')} 
+                    label="Ainda não tem cadastro? Cadastre-se"
+                />    
             </View>
             <View style={estilo.containerBotao}>
-                <TouchableOpacity style={estilo.botao} onPress={() => false}> 
-                    <Text style={estilo.textoBotao}>ACESSAR</Text>
-                </TouchableOpacity >
+                <BtnDefault label="ACESSAR" />
             </View>    
         </View>
     )
@@ -65,22 +61,8 @@ const estilo = {
     containerBotao: {
         flex: 2,
     },
-    botao: {
-        backgroundColor: "#08563c",
-        padding: 8,
-        borderRadius: 5,
-    },
-    textoBotao: {
-        fontSize: 18,
-        color: "#FFFFFF",
-        textAlign: "center",
-        fontWeight: '600'
-    },
     textoTitulo: {
         fontSize: 25,
-    },
-    textCadastrar: {
-        fontSize: 20,
     },
     inputs: {
         fontSize: 20,
