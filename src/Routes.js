@@ -15,6 +15,13 @@ export default Routes = StackNavigator(
         screen: FormCadastro,
         navigationOptions: ({ navigation }) => ({
             title: 'Cadastro',
+            headerStyle: {
+                backgroundColor: '#08563c',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
         }),
     },
   },

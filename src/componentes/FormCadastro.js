@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, TextInput } from 'react-native';
+import { View, Text, ImageBackground, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
 import CampoTexto from './utils/campoTexto';
@@ -10,29 +10,38 @@ import { modificaEmail, modificaNome, modificaSenha } from '../actions/Autentica
 const formCadastro = props => {
     console.log(props);
     return(
-        <View style={estilo.container}>
-            <View style={estilo.containerInputs}>
-                <CampoTexto 
-                    modifica={props.modificaNome}
-                    valor={props.nome} 
-                    pHolder='Nome' 
-                />
-                <CampoTexto 
-                    modifica={props.modificaEmail}
-                    valor={props.email} 
-                    pHolder='E-mail' 
-                />
-                <CampoTexto 
-                    modifica={props.modificaSenha}
-                    secure={true}
-                    valor={props.senha}
-                    pHolder='Senha' 
-                />
+        <ImageBackground  style={{ flex: 1, width: null }} source={require('../imgs/bg.png')}>
+            <StatusBar
+                backgroundColor="#08563c"
+                barStyle="light-content"
+            />
+            <View style={estilo.container}>
+                <View style={estilo.containerInputs}>
+                    <CampoTexto 
+                        modifica={props.modificaNome}
+                        pHolderColor="#FFF"
+                        valor={props.nome} 
+                        pHolder='Nome' 
+                    />
+                    <CampoTexto 
+                        modifica={props.modificaEmail}
+                        pHolderColor="#FFF"
+                        valor={props.email} 
+                        pHolder='E-mail' 
+                    />
+                    <CampoTexto 
+                        modifica={props.modificaSenha}
+                        pHolderColor="#FFF"
+                        secure={true}
+                        valor={props.senha}
+                        pHolder='Senha' 
+                    />
+                </View>
+                <View style={estilo.containerBotao}>
+                    <BtnDefault label="CADASTRAR" />
+                </View>
             </View>
-            <View style={estilo.containerBotao}>
-                <BtnDefault label="CADASTRAR" />
-            </View>
-        </View>
+        </ImageBackground>
     );
 }
 

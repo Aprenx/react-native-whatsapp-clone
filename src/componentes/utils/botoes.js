@@ -27,5 +27,6 @@ const estilo = {
     },
     textLink: {
         fontSize: 20,
+        color: '#FFF'
     },
 }

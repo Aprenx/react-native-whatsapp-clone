@@ -6,7 +6,8 @@ export default props => (
         onChangeText={texto => props.modifica(texto)}
         value={props.valor}
         underlineColorAndroid="#08563c" 
-        selectionColor="#08563c" 
+        selectionColor="#08563c"
+        placeholderTextColor={props.pHolderColor}
         style={estilo.inputs} 
         placeholder={props.pHolder}
         secureTextEntry={ props.secure ? true : false }
@@ -16,7 +17,7 @@ export default props => (
 const estilo = {
     inputs: {
         fontSize: 20,
-        color: "#707070",
+        color: "#FFF",
         height: 50,
     }
 }
