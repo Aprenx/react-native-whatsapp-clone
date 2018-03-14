@@ -4,6 +4,8 @@
 //payload: envio da informação da informação que sera utilizada dentro do reducer para evoluir o estado da aplicação
 //payload nao é o nome obrigatorio mas esta como sugestão na doc
 
+import firebase from 'firebase';
+
 export const modificaEmail = (texto) => {
     return  {
         type: 'modifica_email',
@@ -23,4 +25,21 @@ export const modificaNome = (texto) => {
         type: 'modifica_nome',
         payload: texto
     }
+}
+
+export const cadastraUsuario = ({nome, email, senha}) => {
+    return dispatch => {
+        /*dispatch é um objeto literal bem definido que quando for executado, será devolvido para store */
+        firebase.auth().createUserWithEmailAndPassword(email, senha)
+            .then(user => cadastroUsuarioSucesso(dispatch))
+            .catch(erro => cadastroUsuarioErro(erro, dispatch));
+    }
+}
+
+const cadastroUsuarioSucesso = (dispatch) => {
+    dispatch({ type: 'sucesso' });
+}
+
+const cadastroUsuarioErro = (erro, dispatch) => {
+    dispatch({ type: 'erro' });
 }

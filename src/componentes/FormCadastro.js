@@ -1,48 +1,61 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, ImageBackground, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
 import CampoTexto from './utils/campoTexto';
 import { BtnDefault } from './utils/botoes';
 
-import { modificaEmail, modificaNome, modificaSenha } from '../actions/AutenticacaoActions';
+import { 
+    modificaEmail, 
+    modificaNome, 
+    modificaSenha, 
+    cadastraUsuario 
+} from '../actions/AutenticacaoActions';
 
-const formCadastro = props => {
-    console.log(props);
-    return(
-        <ImageBackground  style={{ flex: 1, width: null }} source={require('../imgs/bg.png')}>
-            <StatusBar
-                backgroundColor="#08563c"
-                barStyle="light-content"
-            />
-            <View style={estilo.container}>
-                <View style={estilo.containerInputs}>
-                    <CampoTexto 
-                        modifica={props.modificaNome}
-                        pHolderColor="#FFF"
-                        valor={props.nome} 
-                        pHolder='Nome' 
-                    />
-                    <CampoTexto 
-                        modifica={props.modificaEmail}
-                        pHolderColor="#FFF"
-                        valor={props.email} 
-                        pHolder='E-mail' 
-                    />
-                    <CampoTexto 
-                        modifica={props.modificaSenha}
-                        pHolderColor="#FFF"
-                        secure={true}
-                        valor={props.senha}
-                        pHolder='Senha' 
-                    />
+class FormCadastro extends Component {
+    
+    _cadastraUsuario(){
+        const { nome, email, senha } = this.props;
+
+        this.props.cadastraUsuario({nome, email, senha});
+    }
+
+    render(){
+        return(
+            <ImageBackground  style={{ flex: 1, width: null }} source={require('../imgs/bg.png')}>
+                <StatusBar
+                    backgroundColor="#08563c"
+                    barStyle="light-content"
+                />
+                <View style={estilo.container}>
+                    <View style={estilo.containerInputs}>
+                        <CampoTexto 
+                            modifica={this.props.modificaNome}
+                            pHolderColor="#FFF"
+                            valor={this.props.nome} 
+                            pHolder='Nome' 
+                        />
+                        <CampoTexto 
+                            modifica={this.props.modificaEmail}
+                            pHolderColor="#FFF"
+                            valor={this.props.email} 
+                            pHolder='E-mail' 
+                        />
+                        <CampoTexto 
+                            modifica={this.props.modificaSenha}
+                            pHolderColor="#FFF"
+                            secure={true}
+                            valor={this.props.senha}
+                            pHolder='Senha' 
+                        />
+                    </View>
+                    <View style={estilo.containerBotao}>
+                        <BtnDefault action={() => this._cadastraUsuario()} label="CADASTRAR" />
+                    </View>
                 </View>
-                <View style={estilo.containerBotao}>
-                    <BtnDefault label="CADASTRAR" />
-                </View>
-            </View>
-        </ImageBackground>
-    );
+            </ImageBackground>
+        );
+    }
 }
 
 const mapStateToProps = state => { 
@@ -68,4 +81,12 @@ const estilo = {
     containerBotao: { flex: 1 },
 }
 
-export default connect(mapStateToProps, { modificaEmail, modificaNome, modificaSenha })(formCadastro);
+export default connect(
+    mapStateToProps, 
+    { 
+        modificaEmail, 
+        modificaNome, 
+        modificaSenha,
+        cadastraUsuario
+    }
+)(FormCadastro);
