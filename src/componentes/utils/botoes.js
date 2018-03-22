@@ -2,13 +2,13 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
 export const BtnDefault = props => (
-    <TouchableOpacity style={estilo.botao} onPress={ props.action ? () => props.action() : () => false}> 
+    <TouchableOpacity style={estilo.botao} onPress={ props.action }> 
         <Text style={estilo.textoBotao}>{props.label}</Text>
     </TouchableOpacity >
 )
 
 export const BtnLink = props => (
-    <TouchableOpacity onPress={() => props.action()} >
+    <TouchableOpacity onPress={ props.action } >
         <Text style={estilo.textLink}>{props.label}</Text>
     </TouchableOpacity>
 )

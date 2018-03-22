@@ -37,9 +37,10 @@ export const cadastraUsuario = ({nome, email, senha}) => {
 }
 
 const cadastroUsuarioSucesso = (dispatch) => {
-    dispatch({ type: 'sucesso' });
+    dispatch ({ type: 'sucesso' });
 }
 
 const cadastroUsuarioErro = (erro, dispatch) => {
-    dispatch({ type: 'erro' });
+    console.log(erro);
+    dispatch ({ type: 'cadastro_usuario_erro', payload: erro.code });
 }

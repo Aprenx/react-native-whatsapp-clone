@@ -38,7 +38,7 @@ const formLogin = props => {
                     />    
                 </View>
                 <View style={estilo.containerBotao}>
-                    <BtnDefault label="ACESSAR" />
+                    <BtnDefault action={() => false} label="ACESSAR" />
                 </View>    
             </View>
         </ImageBackground >

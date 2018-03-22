@@ -48,6 +48,7 @@ class FormCadastro extends Component {
                             valor={this.props.senha}
                             pHolder='Senha' 
                         />
+                        <Text style={estilo.erroText} >{this.props.erroCadastro}</Text>
                     </View>
                     <View style={estilo.containerBotao}>
                         <BtnDefault action={() => this._cadastraUsuario()} label="CADASTRAR" />
@@ -58,13 +59,15 @@ class FormCadastro extends Component {
     }
 }
 
+//estados do redux passados para props para poder usar no componente
 const mapStateToProps = state => { 
     console.log(state);
     return(
         {
             nome: state.AutenticacaoReducer.nome,
             email: state.AutenticacaoReducer.email,
-            senha: state.AutenticacaoReducer.senha
+            senha: state.AutenticacaoReducer.senha,
+            erroCadastro: state.AutenticacaoReducer.erroCadastro
         }
     )
 }
@@ -79,6 +82,12 @@ const estilo = {
         justifyContent: 'center',
     },
     containerBotao: { flex: 1 },
+    erroText: {
+        color: '#ff0000',
+        fontSize: 18,
+        textAlign: 'center',
+        fontWeight: '800'
+    }
 }
 
 export default connect(
