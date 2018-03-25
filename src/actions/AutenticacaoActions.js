@@ -5,6 +5,8 @@
 //payload nao é o nome obrigatorio mas esta como sugestão na doc
 
 import firebase from 'firebase';
+import NavigationHelper from '../navigation/NavigationHelper';
+import b64 from 'base-64';
 
 export const modificaEmail = (texto) => {
     return  {
@@ -31,13 +33,23 @@ export const cadastraUsuario = ({nome, email, senha}) => {
     return dispatch => {
         /*dispatch é um objeto literal bem definido que quando for executado, será devolvido para store */
         firebase.auth().createUserWithEmailAndPassword(email, senha)
-            .then(user => cadastroUsuarioSucesso(dispatch))
+            .then(user => {
+                /*no sucesso do cadastro, eu cadastro o email e nome no database*/
+                let emailB64 = b64.encode(email);
+
+                firebase.database().ref(`/contatos/${emailB64}`)
+                    .push({ nome })
+                    .then(value => cadastroUsuarioSucesso(dispatch))
+                
+            })
             .catch(erro => cadastroUsuarioErro(erro, dispatch));
     }
 }
 
 const cadastroUsuarioSucesso = (dispatch) => {
-    dispatch ({ type: 'sucesso' });
+    dispatch ({ type: 'cadastro_usuario_sucesso' });
+
+    NavigationHelper.navigate('BoasVindas');
 }
 
 const cadastroUsuarioErro = (erro, dispatch) => {

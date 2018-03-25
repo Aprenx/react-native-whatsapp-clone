@@ -1,48 +1,50 @@
-import React from 'React';
+import React, { Component } from 'React';
 import { View, Text, ImageBackground, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
 import CampoTexto from './utils/campoTexto';
-import { BtnDefault, BtnLink } from './utils/botoes';
+import { BtnWhiteWithRadius, BtnLink } from './utils/botoes';
 import { modificaEmail, modificaSenha } from '../actions/AutenticacaoActions';
 
-const formLogin = props => {
-    console.log(props);
-    return(
-        <ImageBackground  style={{ flex: 1, width: null }} source={require('../imgs/bg.png')}>
-            <StatusBar
-                backgroundColor="#08563c"
-                barStyle="light-content"
-            />
-            <View style={estilo.container}>
-                <View style={estilo.containerTitulo}>
-                    <Text style={estilo.textoTitulo}> WhatsApp Clone </Text>
+class FormLogin extends Component {
+    
+    render() {
+        return(
+            <ImageBackground  style={{ flex: 1, width: null }} source={require('../imgs/bg.png')}>
+                <StatusBar
+                    backgroundColor="#08563c"
+                    barStyle="light-content"
+                />
+                <View style={estilo.container}>
+                    <View style={estilo.containerTitulo}>
+                        <Text style={estilo.textoTitulo}> WhatsApp Clone </Text>
+                    </View>
+                    <View style={estilo.containerInputs}>
+                        <CampoTexto 
+                            modifica={this.props.modificaEmail}
+                            pHolderColor="#FFF"
+                            valor={this.props.email} 
+                            pHolder='E-mail' 
+                        />
+                        <CampoTexto 
+                            modifica={this.props.modificaSenha}
+                            pHolderColor="#FFF"
+                            secure={true}
+                            valor={this.props.senha}
+                            pHolder='Senha' 
+                        />
+                        <BtnLink 
+                            action={() => this.props.navigation.navigate('Cadastro')} 
+                            label="Ainda não tem cadastro? Cadastre-se"
+                        />    
+                    </View>
+                    <View style={estilo.containerBotao}>
+                        <BtnWhiteWithRadius action={() => false} label="ACESSAR" />
+                    </View>    
                 </View>
-                <View style={estilo.containerInputs}>
-                    <CampoTexto 
-                        modifica={props.modificaEmail}
-                        pHolderColor="#FFF"
-                        valor={props.email} 
-                        pHolder='E-mail' 
-                    />
-                    <CampoTexto 
-                        modifica={props.modificaSenha}
-                        pHolderColor="#FFF"
-                        secure={true}
-                        valor={props.senha}
-                        pHolder='Senha' 
-                    />
-                    <BtnLink 
-                        action={() => props.navigation.navigate('Cadastro')} 
-                        label="Ainda não tem cadastro? Cadastre-se"
-                    />    
-                </View>
-                <View style={estilo.containerBotao}>
-                    <BtnDefault action={() => false} label="ACESSAR" />
-                </View>    
-            </View>
-        </ImageBackground >
-    )
+            </ImageBackground >
+        )
+    }
 };
 
 //faz o mapeamento dos estados do redux que desejo pegar do reducer para passar para props
@@ -71,7 +73,9 @@ const estilo = {
     },
     textoTitulo: {
         fontSize: 25,
-        color: "#FFF"
+        color: "#FFF",
+        textShadowOffset: {width: 1, height: 1},
+        textShadowColor: '#c1c1c1'
     },
     inputs: {
         fontSize: 20,
@@ -81,4 +85,4 @@ const estilo = {
 }
 
 //o connect junta o mapeamento dos estados e passa como props para o formLogin em tempo de execução
-export default connect(mapStateToProps, { modificaEmail, modificaSenha })(formLogin);
+export default connect(mapStateToProps, { modificaEmail, modificaSenha })(FormLogin);

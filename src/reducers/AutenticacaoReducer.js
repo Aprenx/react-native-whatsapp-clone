@@ -11,6 +11,7 @@ export default (state = INITIAL_STATE, action) => {
         case 'modifica_email': return { ...state, email: action.payload  };
         case 'modifica_senha': return { ...state, senha: action.payload  };
         case 'modifica_nome': return { ...state, nome: action.payload  };
+        case 'cadastro_usuario_sucesso': return { ...state, nome: '', senha: ''};
         case 'cadastro_usuario_erro':
             let msgErro = '';
             switch(action.payload){
@@ -24,7 +25,7 @@ export default (state = INITIAL_STATE, action) => {
                     msgErro = 'A senha precisa ter no mínimo 6 digitos!'; break;
                 default: msgErro = 'Erro desconhecido'; break;
             }
-            return { ...state, erroCadastro: msgErro  };
+            return { ...state, erroCadastro: msgErro  };            
         default: return state;
     }
 }

@@ -3,7 +3,7 @@ import { View, Text, ImageBackground, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
 import CampoTexto from './utils/campoTexto';
-import { BtnDefault } from './utils/botoes';
+import { BtnWhiteWithRadius } from './utils/botoes';
 
 import { 
     modificaEmail, 
@@ -51,7 +51,7 @@ class FormCadastro extends Component {
                         <Text style={estilo.erroText} >{this.props.erroCadastro}</Text>
                     </View>
                     <View style={estilo.containerBotao}>
-                        <BtnDefault action={() => this._cadastraUsuario()} label="CADASTRAR" />
+                        <BtnWhiteWithRadius action={() => this._cadastraUsuario()} label="CADASTRAR" />
                     </View>
                 </View>
             </ImageBackground>
@@ -86,7 +86,9 @@ const estilo = {
         color: '#ff0000',
         fontSize: 18,
         textAlign: 'center',
-        fontWeight: '800'
+        fontWeight: '800',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowColor: '#c1c1c1'
     }
 }
 

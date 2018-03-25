@@ -2,11 +2,18 @@ import { StackNavigator } from 'react-navigation';
 
 import FormLogin from './componentes/FormLogin.js';
 import FormCadastro from './componentes/FormCadastro.js';
+import BoasVindas from './componentes/BoasVindas.js';
 
 export default Routes = StackNavigator(
   {
     Login: { 
         screen: FormLogin,
+        navigationOptions: ({ navigation }) => ({
+            header: false,
+        }),
+    },
+    BoasVindas: { 
+        screen: BoasVindas,
         navigationOptions: ({ navigation }) => ({
             header: false,
         }),

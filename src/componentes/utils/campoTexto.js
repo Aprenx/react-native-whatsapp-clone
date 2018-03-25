@@ -5,8 +5,8 @@ export default props => (
     <TextInput
         onChangeText={texto => props.modifica(texto)}
         value={props.valor}
-        underlineColorAndroid="#08563c" 
-        selectionColor="#08563c"
+        underlineColorAndroid="#FFF" 
+        selectionColor="#FFF"
         placeholderTextColor={props.pHolderColor}
         style={estilo.inputs} 
         placeholder={props.pHolder}

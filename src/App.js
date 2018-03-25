@@ -6,6 +6,7 @@ import ReduxThunk from 'redux-thunk';
 
 import Routes from './Routes';
 import reducers from './reducers';
+import NavigationHelper from './navigation/NavigationHelper';
 
 export default class App extends Component {
     componentWillMount() {
@@ -22,7 +23,7 @@ export default class App extends Component {
     render(){
         return (
             <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-                <Routes />
+                <Routes ref={navigatorRef => { NavigationHelper.setContainer(navigatorRef); }} />
             </Provider>
         );
     }
