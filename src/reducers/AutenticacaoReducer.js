@@ -2,7 +2,8 @@ const INITIAL_STATE = {
     nome: '',
     email: '',
     senha: '',
-    erroCadastro: ''
+    erroCadastro: '',
+    erroLogin: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -13,19 +14,34 @@ export default (state = INITIAL_STATE, action) => {
         case 'modifica_nome': return { ...state, nome: action.payload  };
         case 'cadastro_usuario_sucesso': return { ...state, nome: '', senha: ''};
         case 'cadastro_usuario_erro':
-            let msgErro = '';
+            let msgErroCad = '';
             switch(action.payload){
                 case 'auth/email-already-in-use': 
-                    msgErro = 'O email já está sendo usado em outra conta!'; break;
+                    msgErroCad = 'O email já está sendo usado em outra conta!'; break;
                 case 'auth/invalid-email': 
-                    msgErro = 'O formato do email é inválido!'; break;
+                    msgErroCad = 'O formato do email é inválido!'; break;
                 case 'auth/operation-not-allowed': 
-                    msgErro = 'O usuário está desabilitado!'; break;
+                    msgErroCad = 'O usuário está desabilitado!'; break;
                 case 'auth/weak-password': 
-                    msgErro = 'A senha precisa ter no mínimo 6 digitos!'; break;
-                default: msgErro = 'Erro desconhecido'; break;
+                    msgErroCad = 'A senha precisa ter no mínimo 6 digitos!'; break;
+                default: msgErroCad = 'Erro desconhecido'; break;
             }
-            return { ...state, erroCadastro: msgErro  };            
+            return { ...state, erroCadastro: msgErroCad  };
+        case 'login_usuario_erro':
+            console.log('entrou no reducer');
+            let msgErroLogin = '';
+            switch(action.payload){
+                case 'auth/user-disabled': 
+                    msgErroLogin = 'Usuário está desabilitado.'; break;
+                case 'auth/invalid-email': 
+                    msgErroLogin = 'O formato do email é inválido!'; break;
+                case 'auth/user-not-found': 
+                    msgErroLogin = 'O email não consta na base de dados!'; break;
+                case 'auth/wrong-password': 
+                    msgErroLogin = 'A senha está incorreta!'; break;
+                default: msgErroLogin = 'Erro desconhecido'; break;
+            }
+            return { ...state, erroLogin: msgErroLogin  };
         default: return state;
     }
 }

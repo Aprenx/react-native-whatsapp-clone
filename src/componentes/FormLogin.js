@@ -4,10 +4,15 @@ import { connect } from 'react-redux';
 
 import CampoTexto from './utils/campoTexto';
 import { BtnWhiteWithRadius, BtnLink } from './utils/botoes';
-import { modificaEmail, modificaSenha } from '../actions/AutenticacaoActions';
+import { modificaEmail, modificaSenha, autenticarUsuario } from '../actions/AutenticacaoActions';
 
 class FormLogin extends Component {
     
+    _autenticarUsuario() {
+        const { email, senha } = this.props;
+        this.props.autenticarUsuario({ email, senha });
+    }
+
     render() {
         return(
             <ImageBackground  style={{ flex: 1, width: null }} source={require('../imgs/bg.png')}>
@@ -33,13 +38,14 @@ class FormLogin extends Component {
                             valor={this.props.senha}
                             pHolder='Senha' 
                         />
+                        <Text style={[estilo.erroText, (this.props.erroLogin ? {} : estilo.hidden)]}>{this.props.erroLogin}</Text>
                         <BtnLink 
                             action={() => this.props.navigation.navigate('Cadastro')} 
                             label="Ainda não tem cadastro? Cadastre-se"
                         />    
                     </View>
                     <View style={estilo.containerBotao}>
-                        <BtnWhiteWithRadius action={() => false} label="ACESSAR" />
+                        <BtnWhiteWithRadius action={() => this._autenticarUsuario()} label="ACESSAR" />
                     </View>    
                 </View>
             </ImageBackground >
@@ -51,7 +57,8 @@ class FormLogin extends Component {
 const mapStateToProps = state => (
     {
         email: state.AutenticacaoReducer.email,
-        senha: state.AutenticacaoReducer.senha
+        senha: state.AutenticacaoReducer.senha,
+        erroLogin: state.AutenticacaoReducer.erroLogin
     }
 );
 
@@ -66,10 +73,10 @@ const estilo = {
         alignItems: 'center',
     },
     containerInputs: {
-        flex: 2,
+        flex: 3,
     },
     containerBotao: {
-        flex: 2,
+        flex: 1,
     },
     textoTitulo: {
         fontSize: 25,
@@ -81,8 +88,26 @@ const estilo = {
         fontSize: 20,
         color: "#707070",
         height: 50,
+    },
+    erroText: {
+        backgroundColor:'rgba(255,148,148,0.8)',
+        padding: 10,
+        borderRadius: 5,
+        color: '#a50000',
+        fontSize: 18,
+        textAlign: 'left',
+        fontWeight: '800',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowColor: '#c1c1c1',
+        marginTop: 5,
+        marginBottom: 5
+    },
+    hidden: {
+        width: 0,
+        height: 0,
+        backgroundColor:'rgba(255,255,255,0)',
     }
 }
 
 //o connect junta o mapeamento dos estados e passa como props para o formLogin em tempo de execução
-export default connect(mapStateToProps, { modificaEmail, modificaSenha })(FormLogin);
+export default connect(mapStateToProps, { modificaEmail, modificaSenha, autenticarUsuario })(FormLogin);

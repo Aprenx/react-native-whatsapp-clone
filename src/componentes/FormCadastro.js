@@ -48,7 +48,7 @@ class FormCadastro extends Component {
                             valor={this.props.senha}
                             pHolder='Senha' 
                         />
-                        <Text style={estilo.erroText} >{this.props.erroCadastro}</Text>
+                        <Text style={[estilo.erroText, (this.props.erroCadastro ? {} : estilo.hidden)]} >{this.props.erroCadastro}</Text>
                     </View>
                     <View style={estilo.containerBotao}>
                         <BtnWhiteWithRadius action={() => this._cadastraUsuario()} label="CADASTRAR" />
@@ -83,12 +83,21 @@ const estilo = {
     },
     containerBotao: { flex: 1 },
     erroText: {
-        color: '#ff0000',
+        backgroundColor:'rgba(255,148,148,0.8)',
+        padding: 10,
+        borderRadius: 5,
+        color: '#a50000',
         fontSize: 18,
-        textAlign: 'center',
+        textAlign: 'left',
         fontWeight: '800',
         textShadowOffset: {width: 1, height: 1},
-        textShadowColor: '#c1c1c1'
+        textShadowColor: '#c1c1c1',
+        marginTop: 5,
+        marginBottom: 5
+    },
+    hidden: {
+        width: 0,
+        height: 0
     }
 }
 
