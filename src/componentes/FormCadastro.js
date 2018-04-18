@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, StatusBar } from 'react-native';
+import { View, Text, ImageBackground, StatusBar, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
 import CampoTexto from './utils/campoTexto';
@@ -18,6 +18,17 @@ class FormCadastro extends Component {
         const { nome, email, senha } = this.props;
 
         this.props.cadastraUsuario({nome, email, senha});
+        this.renderBtnCadastro = this.renderBtnCadastro.bind(this);
+    }
+
+    renderBtnCadastro() {
+        if(this.props.loading_cadastro) {
+            return ( <ActivityIndicator size="large" color="#FFFFFF" /> )
+        }
+
+        return (
+            <BtnWhiteWithRadius action={() => this._cadastraUsuario()} label="CADASTRAR" />
+        );
     }
 
     render(){
@@ -51,7 +62,7 @@ class FormCadastro extends Component {
                         <Text style={[estilo.erroText, (this.props.erroCadastro ? {} : estilo.hidden)]} >{this.props.erroCadastro}</Text>
                     </View>
                     <View style={estilo.containerBotao}>
-                        <BtnWhiteWithRadius action={() => this._cadastraUsuario()} label="CADASTRAR" />
+                        {this.renderBtnCadastro()}
                     </View>
                 </View>
             </ImageBackground>
@@ -67,7 +78,8 @@ const mapStateToProps = state => {
             nome: state.AutenticacaoReducer.nome,
             email: state.AutenticacaoReducer.email,
             senha: state.AutenticacaoReducer.senha,
-            erroCadastro: state.AutenticacaoReducer.erroCadastro
+            erroCadastro: state.AutenticacaoReducer.erroCadastro,
+            loading_cadastro: state.AutenticacaoReducer.loading_cadastro
         }
     )
 }
@@ -97,7 +109,8 @@ const estilo = {
     },
     hidden: {
         width: 0,
-        height: 0
+        height: 0,
+        backgroundColor:'rgba(255,255,255,0)',
     }
 }
 

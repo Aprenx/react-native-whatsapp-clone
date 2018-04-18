@@ -1,5 +1,5 @@
 import React, { Component } from 'React';
-import { View, Text, ImageBackground, StatusBar } from 'react-native';
+import { View, Text, ImageBackground, StatusBar, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
 import CampoTexto from './utils/campoTexto';
@@ -11,6 +11,21 @@ class FormLogin extends Component {
     _autenticarUsuario() {
         const { email, senha } = this.props;
         this.props.autenticarUsuario({ email, senha });
+        this.renderBtnAcessar = this.renderBtnAcessar.bind(this)
+    }
+
+    renderBtnAcessar() {
+
+        if(this.props.loading_login) {
+            return (
+                <ActivityIndicator size="large" color="#FFFFFF" />
+            );
+        }
+
+        return (
+            <BtnWhiteWithRadius action={() => this._autenticarUsuario()} label="ACESSAR" />
+        )
+         
     }
 
     render() {
@@ -45,7 +60,7 @@ class FormLogin extends Component {
                         />    
                     </View>
                     <View style={estilo.containerBotao}>
-                        <BtnWhiteWithRadius action={() => this._autenticarUsuario()} label="ACESSAR" />
+                        {this.renderBtnAcessar()}
                     </View>    
                 </View>
             </ImageBackground >
@@ -58,7 +73,8 @@ const mapStateToProps = state => (
     {
         email: state.AutenticacaoReducer.email,
         senha: state.AutenticacaoReducer.senha,
-        erroLogin: state.AutenticacaoReducer.erroLogin
+        erroLogin: state.AutenticacaoReducer.erroLogin,
+        loading_login: state.AutenticacaoReducer.loading_login
     }
 );
 

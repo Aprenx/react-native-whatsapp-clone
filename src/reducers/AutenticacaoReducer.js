@@ -1,49 +1,70 @@
+import { 
+    MODIFICA_EMAIL,
+    MODIFICA_SENHA,
+    MODIFICA_NOME,
+    CADASTRO_USUARIO_SUCESSO,
+    CADASTRO_USUARIO_ERRO,
+    LOGIN_USUARIO_SUCESSO,
+    LOGIN_USUARIO_LOGIN,
+    LOGIN_USUARIO_ERRO,
+    LOGIN_EM_ANDAMENTO,
+    CADASTRO_EM_ANDAMENTO
+} from '../actions/types'
+
 const INITIAL_STATE = {
     nome: '',
     email: '',
     senha: '',
     erroCadastro: '',
-    erroLogin: ''
+    erroLogin: '',
+    loading_login: false,
+    loading_cadastro: false
 }
 
 export default (state = INITIAL_STATE, action) => {
     console.log(action);
     switch (action.type) {
-        case 'modifica_email': return { ...state, email: action.payload  };
-        case 'modifica_senha': return { ...state, senha: action.payload  };
-        case 'modifica_nome': return { ...state, nome: action.payload  };
-        case 'cadastro_usuario_sucesso': return { ...state, nome: '', senha: ''};
-        case 'cadastro_usuario_erro':
-            let msgErroCad = '';
-            switch(action.payload){
-                case 'auth/email-already-in-use': 
-                    msgErroCad = 'O email já está sendo usado em outra conta!'; break;
-                case 'auth/invalid-email': 
-                    msgErroCad = 'O formato do email é inválido!'; break;
-                case 'auth/operation-not-allowed': 
-                    msgErroCad = 'O usuário está desabilitado!'; break;
-                case 'auth/weak-password': 
-                    msgErroCad = 'A senha precisa ter no mínimo 6 digitos!'; break;
-                default: msgErroCad = 'Erro desconhecido'; break;
-            }
-            return { ...state, erroCadastro: msgErroCad  };
-        case 'login_usuario_erro':
-            console.log('entrou no reducer');
-            let msgErroLogin = '';
-            switch(action.payload){
-                case 'auth/user-disabled': 
-                    msgErroLogin = 'Usuário está desabilitado.'; break;
-                case 'auth/invalid-email': 
-                    msgErroLogin = 'O formato do email é inválido!'; break;
-                case 'auth/user-not-found': 
-                    msgErroLogin = 'O email não consta na base de dados!'; break;
-                case 'auth/wrong-password': 
-                    msgErroLogin = 'A senha está incorreta!'; break;
-                default: msgErroLogin = 'Erro desconhecido'; break;
-            }
-            return { ...state, erroLogin: msgErroLogin  };
-        default: return state;
+        case MODIFICA_EMAIL: 
+            return { ...state, email: action.payload  };
+        case MODIFICA_SENHA: 
+            return { ...state, senha: action.payload  };
+        case MODIFICA_NOME: 
+            return { ...state, nome: action.payload  };
+        case CADASTRO_USUARIO_SUCESSO: 
+            return { ...state, nome: '', senha: '', loading_cadastro: false};
+        case CADASTRO_USUARIO_ERRO: 
+            return { ...state, erroCadastro: msgErro(action.payload), loading_cadastro: false };
+        case LOGIN_USUARIO_ERRO:  
+            return { ...state, erroLogin: msgErro(action.payload), loading_login: false };
+        case LOGIN_EM_ANDAMENTO: 
+            return { ...state, loading_login: true };
+        case CADASTRO_EM_ANDAMENTO: 
+            return { ...state, loading_cadastro: true };
+        default: 
+            return state;
     }
+}
+
+function msgErro(codigo) {
+    let erro = '';
+    switch(codigo){
+        case 'auth/user-disabled': 
+            erro = 'Usuário está desabilitado.'; break;
+        case 'auth/user-not-found': 
+            erro = 'O email não consta na base de dados!'; break;
+        case 'auth/wrong-password': 
+            erro = 'A senha está incorreta!'; break;
+        case 'auth/email-already-in-use': 
+            erro = 'O email já está sendo usado em outra conta!'; break;
+        case 'auth/invalid-email': 
+            erro = 'O formato do email é inválido!'; break;
+        case 'auth/operation-not-allowed': 
+            erro = 'O usuário está desabilitado!'; break;
+        case 'auth/weak-password': 
+            erro = 'A senha precisa ter no mínimo 6 digitos!'; break;
+        default: erro = 'Erro desconhecido'; break;
+    }
+    return erro;
 }
 
 /*
